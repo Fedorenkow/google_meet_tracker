@@ -3,5 +3,17 @@
   "name": "Google meet tracker",
   "description": "Tracking meet for teachers",
   "version": "1.0.5",
-  
+  "icons": {"128": "2.png"},
+  "content_scripts": [
+    {
+        "js": [
+            "script.js"
+        ]
+    }
+],
+  "action": {
+    "default_icon": "1.png",
+    "default_popup": "index.html"
+  },
+  "permissions": ["activeTab"]
 }
