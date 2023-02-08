@@ -1,5 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Google meet tracker",
+  "description": "Tracking meet for teachers",
+  "version": "1.0.5",
   
 }
