@@ -29,5 +29,24 @@ h1{
     color: #444;
     font-size: 18px;
 }
+.btn{
+   
+    width: 145px;
+    height: 54px;
+    background: #e5464f;
+    border-radius: 6px;
+    
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1;
+    color: #fff;
+    justify-content: center;
+    
+    transition: background-color 0.2s ease-in;
+}
+.btn--div{
+    display: flex;
+    justify-content: center;
+}
 
 
