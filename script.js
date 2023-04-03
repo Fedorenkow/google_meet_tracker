@@ -7,6 +7,7 @@ let StartTime = new Date()
 let goingToStop = 0;
 let isAttendanceWorking = false;
 let buttonClickInd = 0;
+
 function start() {
     startAttendanceTracker = setInterval(attendanceTracker, 1000);
 }

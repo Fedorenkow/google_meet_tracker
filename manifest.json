@@ -16,7 +16,7 @@
 ],
   "action": {
     "default_icon": "1.png",
-    "default_popup": "index.html"
+    "default_popup": "carcass.html"
   },
   "permissions": ["activeTab"]
 }
