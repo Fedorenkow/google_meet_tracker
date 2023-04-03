@@ -143,7 +143,7 @@ function attendanceTracker() {
         }
     }
 }
-// Adding button to meet ui
+
 let newButton = document.createElement("button");
 newButton.id = "newButton";
 newButton.className = "Jyj1Td CkXZgc";
@@ -158,6 +158,7 @@ newButton.style.padding = "auto auto auto auto";
 newButton.style.height = "75px";
 newButton.style.width = "250px";
 newButton.style.borderRadius = "10px";
+
 let tryInsertingButton = setInterval(insertButton, 1000);
 function insertButton() {
     try {
