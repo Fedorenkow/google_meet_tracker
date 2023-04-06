@@ -144,51 +144,42 @@ function attendanceTracker() {
     }
 }
 
-// let newButton = document.createElement("button");
-// newButton.id = "newButton";
-// newButton.className = "Jyj1Td CkXZgc";
-// newButton.innerHTML = "Track Attendance";
-// newButton.type = "button";
-// newButton.innerHTML = "Track Attendance";
-// newButton.style.border = "1px solid white";
-// newButton.style.backgroundColor = "#C5221F";
-// newButton.style.color = "white";
-// newButton.style.borderRadius = "2px";
-// newButton.style.padding = "auto auto auto auto";
-// newButton.style.height = "75px";
-// newButton.style.width = "250px";
-// newButton.style.borderRadius = "10px";
+let newButton = document.getElementById("btn");
+newButton.addEventListener("click", start);
 
 let tryInsertingButton = setInterval(insertButton, 1000);
-function insertButton() {
-    try {
-        ui_buttons = document.getElementsByClassName("VfPpkd-kBDsod NtU4hc");
-        //ui_buttons[1].click();
-        document.getElementsByClassName("lefKC")[0].appendChild(newButton);
-        document.getElementById('newButton')
-            .addEventListener('click', function() {
-                if (!isAttendanceWorking) {
-                    isAttendanceWorking = true;
-                    newButton.innerHTML = "Click To<br>Generate Attendance Report";
-                    newButton.style.border = "1px solid white";
-                    newButton.style.backgroundColor = "#00796b";
-                    StartTime = new Date()
-                        .toLocaleTimeString();
-                    studentDetails.clear();
-                    studentsNameSet.clear();
-                    totalClassDuration = 0;
-                    start();
-                } else if (isAttendanceWorking) {
-                    isAttendanceWorking = false;
-                    newButton.innerHTML = "Track Attendance";
-                    newButton.style.border = "1px solid white";
-                    newButton.style.backgroundColor = "#C5221F";
-                    stop();
-                }
-            });
-        clearInterval(tryInsertingButton);
-    } catch (error) {}
+function insertButton(){
+    newButton.addEventListener("click", function() {
+        try{
+            ui_buttons = document.getElementsByClassName("VfPpkd-kBDsod NtU4hc");
+            //ui_buttons[1].click();
+            document.getElementsByClassName("lefKC")[0].appendChild(newButton);
+            document.getElementById('newButton')
+        if (!isAttendanceWorking) {
+            isAttendanceWorking = true;
+            newButton.innerHTML = "Click To<br>Generate Attendance Report";
+            newButton.style.border = "1px solid white";
+            newButton.style.backgroundColor = "#00796b";
+            StartTime = new Date()
+                .toLocaleTimeString();
+            studentDetails.clear();
+            studentsNameSet.clear();
+            totalClassDuration = 0;
+            start();
+        } else if(isAttendanceWorking) {
+            isAttendanceWorking = false;
+            newButton.innerHTML = "Track Attendance";
+            newButton.style.border = "1px solid white";
+            newButton.style.backgroundColor = "#C5221F";
+          stop();
+        }
+         clearInterval(tryInsertingButton);
+    }catch{error}
+      });
 }
+
+  
+
 function toTimeFormat(time) {
     hh = Math.floor(time / 3600);
     time = time - (hh * 3600);
