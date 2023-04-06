@@ -144,20 +144,20 @@ function attendanceTracker() {
     }
 }
 
-let newButton = document.createElement("button");
-newButton.id = "newButton";
-newButton.className = "Jyj1Td CkXZgc";
-newButton.innerHTML = "Track Attendance";
-newButton.type = "button";
-newButton.innerHTML = "Track Attendance";
-newButton.style.border = "1px solid white";
-newButton.style.backgroundColor = "#C5221F";
-newButton.style.color = "white";
-newButton.style.borderRadius = "2px";
-newButton.style.padding = "auto auto auto auto";
-newButton.style.height = "75px";
-newButton.style.width = "250px";
-newButton.style.borderRadius = "10px";
+// let newButton = document.createElement("button");
+// newButton.id = "newButton";
+// newButton.className = "Jyj1Td CkXZgc";
+// newButton.innerHTML = "Track Attendance";
+// newButton.type = "button";
+// newButton.innerHTML = "Track Attendance";
+// newButton.style.border = "1px solid white";
+// newButton.style.backgroundColor = "#C5221F";
+// newButton.style.color = "white";
+// newButton.style.borderRadius = "2px";
+// newButton.style.padding = "auto auto auto auto";
+// newButton.style.height = "75px";
+// newButton.style.width = "250px";
+// newButton.style.borderRadius = "10px";
 
 let tryInsertingButton = setInterval(insertButton, 1000);
 function insertButton() {
