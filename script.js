@@ -7,11 +7,9 @@ let StartTime = new Date()
 let goingToStop = 0;
 let isAttendanceWorking = false;
 let buttonClickInd = 0;
-
 function start() {
     startAttendanceTracker = setInterval(attendanceTracker, 1000);
 }
-
 let stop = STOP = function() {
     clearInterval(startAttendanceTracker);
     let meetingCode = window.location.pathname.substring(1);
@@ -48,37 +46,31 @@ let stop = STOP = function() {
         joiningTime: studentsJoiningTime,
         meetingDuration: totalClassDuration
     }
-    console.log(newRecord);
+    
+// Функція, що зберігає текст у файл
 
-    fetch("https://sheet.best/api/sheets/2198ff4c-2996-42ac-b4ea-5f14fb99c2db", {
-    method: "POST",
-    mode: "cors",
-    headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({ 
-    meetingCode: meetingCode,
-    date: date,
-    attendanceStartTime: StartTime,
-    attendanceStopTime: new Date()
-    .toLocaleTimeString(),
-    studentNames: sortedtstudentsNameSet,
-    attendedDuration: studentsAttendedDuration,
-    joiningTime: studentsJoiningTime,
-    meetingDuration: totalClassDuration
+  // Отримати текст з текстового поля
+  const meetCode = meetingCode
+  const date2 = date;
+    
 
-  }),
-})
-  .then((r) => r.json())
-  .then((data) => {
-    // The response comes here
-    console.log(data);
-  })
-  .catch((error) => {
-    // Errors are reported there
-    console.log(error);
-  });
+  // Створити новий текстовий файл з отриманим текстом
+  const fileToSave = new Blob([meetCode,"\n",date2], {type: 'text/plain'});
+  
+  // Створити посилання на файл для завантаження
+  const downloadLink = document.createElement('a');
+  downloadLink.download = 'text.txt';
+  downloadLink.href = window.URL.createObjectURL(fileToSave);
+  
+  // Додати посилання на сторінку та автоматично його клікнути
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+// Додати обробник події на кнопку збереження
+saveButton.addEventListener('click', saveTextToFile);
 }
+
+
 
 function attendanceTracker() {
     let currentlyPresentStudents = document.getElementsByClassName("zWGUib");
@@ -143,43 +135,51 @@ function attendanceTracker() {
         }
     }
 }
-
-let newButton = document.getElementById("btn");
-newButton.addEventListener("click", start);
-
+// Adding button to meet ui
+let newButton = document.createElement("button");
+newButton.id = "newButton";
+newButton.className = "Jyj1Td CkXZgc";
+newButton.innerHTML = "Track Attendance";
+newButton.type = "button";
+newButton.innerHTML = "Track Attendance";
+newButton.style.border = "1px solid white";
+newButton.style.backgroundColor = "#C5221F";
+newButton.style.color = "white";
+newButton.style.borderRadius = "2px";
+newButton.style.padding = "auto auto auto auto";
+newButton.style.height = "75px";
+newButton.style.width = "250px";
+newButton.style.borderRadius = "10px";
 let tryInsertingButton = setInterval(insertButton, 1000);
-function insertButton(){
-    newButton.addEventListener("click", function() {
-        try{
-            ui_buttons = document.getElementsByClassName("VfPpkd-kBDsod NtU4hc");
-            //ui_buttons[1].click();
-            document.getElementsByClassName("lefKC")[0].appendChild(newButton);
-            document.getElementById('newButton')
-        if (!isAttendanceWorking) {
-            isAttendanceWorking = true;
-            newButton.innerHTML = "Click To<br>Generate Attendance Report";
-            newButton.style.border = "1px solid white";
-            newButton.style.backgroundColor = "#00796b";
-            StartTime = new Date()
-                .toLocaleTimeString();
-            studentDetails.clear();
-            studentsNameSet.clear();
-            totalClassDuration = 0;
-            start();
-        } else if(isAttendanceWorking) {
-            isAttendanceWorking = false;
-            newButton.innerHTML = "Track Attendance";
-            newButton.style.border = "1px solid white";
-            newButton.style.backgroundColor = "#C5221F";
-          stop();
-        }
-         clearInterval(tryInsertingButton);
-    }catch{error}
-      });
+function insertButton() {
+    try {
+        ui_buttons = document.getElementsByClassName("VfPpkd-kBDsod NtU4hc");
+        //ui_buttons[1].click();
+        document.getElementsByClassName("lefKC")[0].appendChild(newButton);
+        document.getElementById('newButton')
+            .addEventListener('click', function() {
+                if (!isAttendanceWorking) {
+                    isAttendanceWorking = true;
+                    newButton.innerHTML = "Click To<br>Generate Attendance Report";
+                    newButton.style.border = "1px solid white";
+                    newButton.style.backgroundColor = "#00796b";
+                    StartTime = new Date()
+                        .toLocaleTimeString();
+                    studentDetails.clear();
+                    studentsNameSet.clear();
+                    totalClassDuration = 0;
+                    start();
+                } else if (isAttendanceWorking) {
+                    isAttendanceWorking = false;
+                    newButton.innerHTML = "Track Attendance";
+                    newButton.style.border = "1px solid white";
+                    newButton.style.backgroundColor = "#C5221F";
+                    stop();
+                }
+            });
+        clearInterval(tryInsertingButton);
+    } catch (error) {}
 }
-
-  
-
 function toTimeFormat(time) {
     hh = Math.floor(time / 3600);
     time = time - (hh * 3600);
