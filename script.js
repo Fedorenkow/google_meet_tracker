@@ -63,7 +63,7 @@ let stop = STOP = function() {
   "\n","Година початку відслідковування: ",startTimeOutput,
   "\n","Година закінчення відсклідковування: ",stopTimeOutput,
   "\n\n",
-  studentNamesOutput.join('\n'), "  " , studentsAttendedDurationOutput.join('\n'),"   ", studentsJoiningTimeOutput.join('\n')
+  studentNamesOutput.join('\n'), "   " , studentsAttendedDurationOutput.join('\n'),"   ", studentsJoiningTimeOutput.join('\n')
 
 
 ],
