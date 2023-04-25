@@ -47,15 +47,27 @@ let stop = STOP = function() {
         meetingDuration: totalClassDuration
     }
     
-// Функція, що зберігає текст у файл
 
-  // Отримати текст з текстового поля
-  const meetCode = meetingCode
-  const date2 = date;
+  const meetCodeOutput = meetingCode
+  const dateOutput = date;
+  const startTimeOutput = StartTime;
+  const stopTimeOutput = new Date().toLocaleTimeString();
+  const studentNamesOutput = sortedtstudentsNameSet;
+  const studentsAttendedDurationOutput = studentsAttendedDuration;
+  const studentsJoiningTimeOutput = studentsJoiningTime;
     
 
   // Створити новий текстовий файл з отриманим текстом
-  const fileToSave = new Blob([meetCode,"\n",date2], {type: 'text/plain'});
+  const fileToSave = new Blob(["Код міта: ",meetCodeOutput,
+  "\n","Дата відслідковування: ",dateOutput,
+  "\n","Година початку відслідковування: ",startTimeOutput,
+  "\n","Година закінчення відсклідковування: ",stopTimeOutput,
+  "\n\n",
+  studentNamesOutput.join('\n'), "  " , studentsAttendedDurationOutput.join('\n'),"   ", studentsJoiningTimeOutput.join('\n')
+
+
+],
+  {type: 'text/plain'});
   
   // Створити посилання на файл для завантаження
   const downloadLink = document.createElement('a');
