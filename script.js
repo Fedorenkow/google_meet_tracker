@@ -63,7 +63,7 @@ let stop = STOP = function() {
   "\n","Година початку відслідковування: ",startTimeOutput,
   "\n","Година закінчення відсклідковування: ",stopTimeOutput,
   "\n\n",
-  studentNamesOutput.join('\n'), "   " , studentsAttendedDurationOutput.join('\n'),"   ", studentsJoiningTimeOutput.join('\n')
+  studentNamesOutput.join('\n'), "   " , studentsAttendedDurationOutput.join(''),"   ", studentsJoiningTimeOutput.join('')
 
 
 ],
@@ -71,7 +71,7 @@ let stop = STOP = function() {
   
   // Створити посилання на файл для завантаження
   const downloadLink = document.createElement('a');
-  downloadLink.download = 'text.txt';
+  downloadLink.download = 'Звіт відслідковування.txt';
   downloadLink.href = window.URL.createObjectURL(fileToSave);
   
   // Додати посилання на сторінку та автоматично його клікнути
@@ -119,14 +119,14 @@ function attendanceTracker() {
         if (((studentsNameSet.size) - 1) == -1) {
             goingToStop += 1;
         } else {
-            newButton.innerHTML = "Tracking Started<br>" + toTimeFormat(totalClassDuration) + " ago<br>" + "Click To Generate Report";
+            newButton.innerHTML = "Tracking Started<br>" + toTimeFormat(totalClassDuration) + " ago<br>";
             totalClassDuration += 1;
             goingToStop = 0;
         }
         if (goingToStop == 2) {
             isAttendanceWorking = false;
             newButton.innerHTML = "Track Attendance";
-            newButton.style.border = "2px solid #C5221F";
+            newButton.style.border = "2px solid #8142f5";
             goingToStop = 0;
             stop();
         }
@@ -140,7 +140,7 @@ function attendanceTracker() {
             if (goingToStop == 2) {
                 isAttendanceWorking = false;
                 newButton.innerHTML = "Track Attendance";
-                newButton.style.border = "2px solid #C5221F";
+                newButton.style.border = "2px solid #8142f5";
                 goingToStop = 0;
                 stop();
             }
@@ -151,17 +151,18 @@ function attendanceTracker() {
 let newButton = document.createElement("button");
 newButton.id = "newButton";
 newButton.className = "Jyj1Td CkXZgc";
-newButton.innerHTML = "Track Attendance";
 newButton.type = "button";
-newButton.innerHTML = "Track Attendance";
+newButton.innerHTML = "Start tracking";
 newButton.style.border = "1px solid white";
-newButton.style.backgroundColor = "#C5221F";
+newButton.style.backgroundColor = "#8142f5";
 newButton.style.color = "white";
 newButton.style.borderRadius = "2px";
 newButton.style.padding = "auto auto auto auto";
-newButton.style.height = "75px";
-newButton.style.width = "250px";
+newButton.style.height = "100px";
+newButton.style.width = "150px";
 newButton.style.borderRadius = "10px";
+
+
 let tryInsertingButton = setInterval(insertButton, 1000);
 function insertButton() {
     try {
@@ -172,7 +173,7 @@ function insertButton() {
             .addEventListener('click', function() {
                 if (!isAttendanceWorking) {
                     isAttendanceWorking = true;
-                    newButton.innerHTML = "Click To<br>Generate Attendance Report";
+                    newButton.innerHTML = "Stop tracking";
                     newButton.style.border = "1px solid white";
                     newButton.style.backgroundColor = "#00796b";
                     StartTime = new Date()
@@ -183,9 +184,9 @@ function insertButton() {
                     start();
                 } else if (isAttendanceWorking) {
                     isAttendanceWorking = false;
-                    newButton.innerHTML = "Track Attendance";
+                    newButton.innerHTML = "Start tracking";
                     newButton.style.border = "1px solid white";
-                    newButton.style.backgroundColor = "#C5221F";
+                    newButton.style.backgroundColor = "#8142f5";
                     stop();
                 }
             });
