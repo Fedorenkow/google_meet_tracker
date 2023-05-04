@@ -11,6 +11,29 @@ function start() {
     startAttendanceTracker = setInterval(attendanceTracker, 1000);
 }
 
+function checkCameraStatus() {
+    let currentlyPresentStudents = document.getElementsByClassName("zWGUib");
+    let cameraStatusMap = new Map();
+    for (let i = 0; i < currentlyPresentStudents.length; i++) {
+        let student = currentlyPresentStudents[i];
+        let name = student.innerText.toUpperCase();
+        let camera = student.getElementsByTagName('svg')[0];
+        if (camera) {
+            cameraStatusMap.set(name, {
+                camera: true,
+                time: new Date().toLocaleTimeString()
+            });
+        } else {
+            cameraStatusMap.set(name, {
+                camera: false,
+                time: new Date().toLocaleTimeString()
+            });
+        }
+    }
+    console.log(cameraStatusMap);
+    return cameraStatusMap;
+}
+
 let stop = STOP = function () {
     clearInterval(startAttendanceTracker);
     let meetingCode = window.location.pathname.substring(1);
@@ -41,6 +64,7 @@ let stop = STOP = function () {
     const dateOutput = date;
     const startTimeOutput = StartTime;
     const stopTimeOutput = new Date().toLocaleTimeString();
+    const cameraStatus = checkCameraStatus();
     
     // Створити новий текстовий файл з отриманим текстом
     const fileToSave = new Blob(["Код міта: ", meetCodeOutput,
@@ -48,7 +72,7 @@ let stop = STOP = function () {
         "\n", "Година початку відслідковування: ", startTimeOutput,
         "\n", "Година закінчення відсклідковування: ", stopTimeOutput,
         "\n\n",
-        sortedtstudentsNameSet.map((name, index) => `${name} ${studentsAttendedDuration[index]} ${studentsJoiningTime[index]} ${cameraStatusMapOutoput.get(index)}\n`)
+        sortedtstudentsNameSet.map((name, index) => `${name} ${studentsAttendedDuration[index]} ${studentsJoiningTime[index]} ${cameraStatus.get(name)} \n`)
 
 
 
@@ -71,8 +95,8 @@ let stop = STOP = function () {
 
 
 function attendanceTracker() {
-    let currentlyPresentStudents = document.getElementsByClassName("zWGUib");
     checkCameraStatus();
+    let currentlyPresentStudents = document.getElementsByClassName("zWGUib");
     if (currentlyPresentStudents.length > 0) {
         studentsNameSet.clear();
         let numberOfjoinedStudents = -1;
@@ -191,19 +215,22 @@ function toTimeFormat(time) {
 }
 
 
+
 function checkCameraStatus() {
-    let currentlyPresentStudents = document.getElementsByClassName("zWGUib");
     let cameraStatusMap = new Map();
-  
+    let currentlyPresentStudents = document.getElementsByClassName("zWGUib");
+    console.log(document.querySelectorAll(".S7urwe"))
     for (let i = 0; i < currentlyPresentStudents.length; i++) {
       let studentName = currentlyPresentStudents[i].innerHTML.toUpperCase();
       let isCameraOn = false;
-      let videoElement = currentlyPresentStudents[i].querySelector("video");
+      let videoElement = document.querySelectorAll(".S7urwe")[i];
+      console.log(videoElement);
       if (videoElement !== null && !videoElement.hidden) {
         isCameraOn = true;
       }
       cameraStatusMap.set(studentName, isCameraOn);
     }
-  
+    console.log(1);
+    console.log(cameraStatusMap);
     return cameraStatusMap;
   }
