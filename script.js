@@ -10,7 +10,8 @@ let buttonClickInd = 0;
 function start() {
     startAttendanceTracker = setInterval(attendanceTracker, 1000);
 }
-let stop = STOP = function() {
+
+let stop = STOP = function () {
     clearInterval(startAttendanceTracker);
     let meetingCode = window.location.pathname.substring(1);
     let date = new Date();
@@ -35,57 +36,43 @@ let stop = STOP = function() {
         studentsAttendedDuration.push(data[0]);
         studentsJoiningTime.push(data[1]);
     }
-    var newRecord = {
-        meetingCode: meetingCode,
-        date: date,
-        attendanceStartTime: StartTime,
-        attendanceStopTime: new Date()
-            .toLocaleTimeString(),
-        studentNames: sortedtstudentsNameSet,
-        attendedDuration: studentsAttendedDuration,
-        joiningTime: studentsJoiningTime,
-        meetingDuration: totalClassDuration
-    }
+
+    const meetCodeOutput = meetingCode
+    const dateOutput = date;
+    const startTimeOutput = StartTime;
+    const stopTimeOutput = new Date().toLocaleTimeString();
     
-
-  const meetCodeOutput = meetingCode
-  const dateOutput = date;
-  const startTimeOutput = StartTime;
-  const stopTimeOutput = new Date().toLocaleTimeString();
-  const studentNamesOutput = sortedtstudentsNameSet;
-  const studentsAttendedDurationOutput = studentsAttendedDuration;
-  const studentsJoiningTimeOutput = studentsJoiningTime;
-    
-
-  // Створити новий текстовий файл з отриманим текстом
-  const fileToSave = new Blob(["Код міта: ",meetCodeOutput,
-  "\n","Дата відслідковування: ",dateOutput,
-  "\n","Година початку відслідковування: ",startTimeOutput,
-  "\n","Година закінчення відсклідковування: ",stopTimeOutput,
-  "\n\n",
-  studentNamesOutput.join('\n'), "   " , studentsAttendedDurationOutput.join(''),"   ", studentsJoiningTimeOutput.join('')
+    // Створити новий текстовий файл з отриманим текстом
+    const fileToSave = new Blob(["Код міта: ", meetCodeOutput,
+        "\n", "Дата відслідковування: ", dateOutput,
+        "\n", "Година початку відслідковування: ", startTimeOutput,
+        "\n", "Година закінчення відсклідковування: ", stopTimeOutput,
+        "\n\n",
+        sortedtstudentsNameSet.map((name, index) => `${name} ${studentsAttendedDuration[index]} ${studentsJoiningTime[index]} ${cameraStatusMapOutoput.get(index)}\n`)
 
 
-],
-  {type: 'text/plain'});
-  
-  // Створити посилання на файл для завантаження
-  const downloadLink = document.createElement('a');
-  downloadLink.download = 'Звіт відслідковування.txt';
-  downloadLink.href = window.URL.createObjectURL(fileToSave);
-  
-  // Додати посилання на сторінку та автоматично його клікнути
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
-  document.body.removeChild(downloadLink);
-// Додати обробник події на кнопку збереження
-saveButton.addEventListener('click', saveTextToFile);
+
+    ],
+        { type: 'text/plain' });
+
+    // Створити посилання на файл для завантаження
+    const downloadLink = document.createElement('a');
+    downloadLink.download = 'Звіт відслідковування.txt';
+    downloadLink.href = window.URL.createObjectURL(fileToSave);
+
+    // Додати посилання на сторінку та автоматично його клікнути
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    // Додати обробник події на кнопку збереження
+    saveButton.addEventListener('click', saveTextToFile);
 }
 
 
 
 function attendanceTracker() {
     let currentlyPresentStudents = document.getElementsByClassName("zWGUib");
+    checkCameraStatus();
     if (currentlyPresentStudents.length > 0) {
         studentsNameSet.clear();
         let numberOfjoinedStudents = -1;
@@ -147,7 +134,7 @@ function attendanceTracker() {
         }
     }
 }
-// Adding button to meet ui
+
 let newButton = document.createElement("button");
 newButton.id = "newButton";
 newButton.className = "Jyj1Td CkXZgc";
@@ -170,7 +157,7 @@ function insertButton() {
         //ui_buttons[1].click();
         document.getElementsByClassName("lefKC")[0].appendChild(newButton);
         document.getElementById('newButton')
-            .addEventListener('click', function() {
+            .addEventListener('click', function () {
                 if (!isAttendanceWorking) {
                     isAttendanceWorking = true;
                     newButton.innerHTML = "Stop tracking";
@@ -191,7 +178,7 @@ function insertButton() {
                 }
             });
         clearInterval(tryInsertingButton);
-    } catch (error) {}
+    } catch (error) { }
 }
 function toTimeFormat(time) {
     hh = Math.floor(time / 3600);
@@ -202,3 +189,21 @@ function toTimeFormat(time) {
     if (hh == 0) return mm + " min " + ss + "s";
     else return hh + " hr " + mm + " min " + ss + "s";
 }
+
+
+function checkCameraStatus() {
+    let currentlyPresentStudents = document.getElementsByClassName("zWGUib");
+    let cameraStatusMap = new Map();
+  
+    for (let i = 0; i < currentlyPresentStudents.length; i++) {
+      let studentName = currentlyPresentStudents[i].innerHTML.toUpperCase();
+      let isCameraOn = false;
+      let videoElement = currentlyPresentStudents[i].querySelector("video");
+      if (videoElement !== null && !videoElement.hidden) {
+        isCameraOn = true;
+      }
+      cameraStatusMap.set(studentName, isCameraOn);
+    }
+  
+    return cameraStatusMap;
+  }
