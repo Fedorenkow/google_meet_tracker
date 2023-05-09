@@ -213,24 +213,3 @@ function toTimeFormat(time) {
     if (hh == 0) return mm + " min " + ss + "s";
     else return hh + " hr " + mm + " min " + ss + "s";
 }
-
-
-
-function checkCameraStatus() {
-    let cameraStatusMap = new Map();
-    let currentlyPresentStudents = document.getElementsByClassName("zWGUib");
-    console.log(document.querySelectorAll(".S7urwe"))
-    for (let i = 0; i < currentlyPresentStudents.length; i++) {
-      let studentName = currentlyPresentStudents[i].innerHTML.toUpperCase();
-      let isCameraOn = false;
-      let videoElement = document.querySelectorAll(".S7urwe")[i];
-      console.log(videoElement);
-      if (videoElement !== null && !videoElement.hidden) {
-        isCameraOn = true;
-      }
-      cameraStatusMap.set(studentName, isCameraOn);
-    }
-    console.log(1);
-    console.log(cameraStatusMap);
-    return cameraStatusMap;
-  }
