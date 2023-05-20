@@ -4,11 +4,6 @@
   "description": "Tracking meet for teachers",
   "version": "1.0.5",
   "icons": {"128": "2.png"},
-  "oauth2":{
-    "client_id":"333203676050-ivrb1pn8521t517puc9spbl5s6l3624t.apps.googleusercontent.com",
-    "scopes": ["https://www.googleapis.com/auth/drive"]
-
-  },
   "permissions": ["identity"],
 
   "content_scripts": [
