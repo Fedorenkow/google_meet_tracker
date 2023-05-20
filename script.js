@@ -61,7 +61,7 @@ let stop = STOP = function() {
   "\n","Година початку відслідковування: ",startTimeOutput,
   "\n","Година закінчення відсклідковування: ",stopTimeOutput,
   "\n\n",
-  studentNamesOutput.join('\n'), "   " , studentsAttendedDurationOutput.join(''),"   ", studentsJoiningTimeOutput.join('')
+  "П.І.Б:  ",studentNamesOutput.join('\n'), "   " ,"Тривалість присутності: ", studentsAttendedDurationOutput.join(''),"   ","Час приєднання: ", studentsJoiningTimeOutput.join('')
 ],
 {type: 'text/plain'});
 
@@ -112,13 +112,13 @@ function attendanceTracker() {
         if (((studentsNameSet.size) - 1) == -1) {
             goingToStop += 1;
         } else {
-            newButton.innerHTML = "Tracking Started<br>" + toTimeFormat(totalClassDuration) + " ago<br>";
+            newButton.innerHTML = "Відслідковування почалось<br>" + toTimeFormat(totalClassDuration) + " тому<br>";
             totalClassDuration += 1;
             goingToStop = 0;
         }
         if (goingToStop == 2) {
             isAttendanceWorking = false;
-            newButton.innerHTML = "Track Attendance";
+            newButton.innerHTML = "Розпочати відслідковування";
             newButton.style.border = "2px solid #8142f5";
             goingToStop = 0;
             stop();
@@ -132,7 +132,7 @@ function attendanceTracker() {
             goingToStop += 1;
             if (goingToStop == 2) {
                 isAttendanceWorking = false;
-                newButton.innerHTML = "Track Attendance";
+                newButton.innerHTML = "Розпочати відслідковування";
                 newButton.style.border = "2px solid #8142f5";
                 goingToStop = 0;
                 stop();
@@ -145,14 +145,14 @@ let newButton = document.createElement("button");
 newButton.id = "newButton";
 newButton.className = "Jyj1Td CkXZgc";
 newButton.type = "button";
-newButton.innerHTML = "Start tracking";
+newButton.innerHTML = "Розпочати відслідковування";
 newButton.style.border = "1px solid white";
-newButton.style.backgroundColor = "#8142f5";
+newButton.style.backgroundColor = "#e5464f";
 newButton.style.color = "white";
 newButton.style.borderRadius = "2px";
 newButton.style.padding = "auto auto auto auto";
 newButton.style.height = "100px";
-newButton.style.width = "150px";
+newButton.style.width = "220px";
 newButton.style.borderRadius = "10px";
 
 
@@ -166,7 +166,7 @@ function insertButton() {
             .addEventListener('click', function() {
                 if (!isAttendanceWorking) {
                     isAttendanceWorking = true;
-                    newButton.innerHTML = "Stop tracking";
+                    newButton.innerHTML = "Закінчити відслідковування";
                     newButton.style.border = "1px solid white";
                     newButton.style.backgroundColor = "#00796b";
                     StartTime = new Date()
@@ -177,7 +177,7 @@ function insertButton() {
                     start();
                 } else if (isAttendanceWorking) {
                     isAttendanceWorking = false;
-                    newButton.innerHTML = "Start tracking";
+                    newButton.innerHTML = "Розпочати відслідковування";
                     newButton.style.border = "1px solid white";
                     newButton.style.backgroundColor = "#8142f5";
                     stop();
