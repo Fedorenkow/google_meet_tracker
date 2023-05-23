@@ -35,17 +35,6 @@ let stop = STOP = function() {
         studentsAttendedDuration.push(data[0]);
         studentsJoiningTime.push(data[1]);
     }
-    var newRecord = {
-        meetingCode: meetingCode,
-        date: date,
-        attendanceStartTime: StartTime,
-        attendanceStopTime: new Date()
-            .toLocaleTimeString(),
-        studentNames: sortedtstudentsNameSet,
-        attendedDuration: studentsAttendedDuration,
-        joiningTime: studentsJoiningTime,
-        meetingDuration: totalClassDuration
-    }
     
   const meetCodeOutput = meetingCode
   const dateOutput = date;
@@ -54,7 +43,7 @@ let stop = STOP = function() {
   const studentNamesOutput = sortedtstudentsNameSet;
   const studentsAttendedDurationOutput = studentsAttendedDuration;
   const studentsJoiningTimeOutput = studentsJoiningTime;
-    
+  
   // Створити новий текстовий файл з отриманим текстом
   const fileToSave = new Blob(["Код міта: ",meetCodeOutput,
   "\n","Дата відслідковування: ",dateOutput,
