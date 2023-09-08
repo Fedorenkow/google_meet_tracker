@@ -7,6 +7,7 @@ let StartTime = new Date()
 let goingToStop = 0;
 let isAttendanceWorking = false;
 let buttonClickInd = 0;
+
 function start() {
     startAttendanceTracker = setInterval(attendanceTracker, 1000);
 }
@@ -35,37 +36,46 @@ let stop = STOP = function() {
         studentsAttendedDuration.push(data[0]);
         studentsJoiningTime.push(data[1]);
     }
-    
-  const meetCodeOutput = meetingCode
-  const dateOutput = date;
-  const startTimeOutput = StartTime;
-  const stopTimeOutput = new Date().toLocaleTimeString();
-  const studentNamesOutput = sortedtstudentsNameSet;
-  const studentsAttendedDurationOutput = studentsAttendedDuration;
-  const studentsJoiningTimeOutput = studentsJoiningTime;
-  
-  // Створити новий текстовий файл з отриманим текстом
-  const fileToSave = new Blob(["Код міта: ",meetCodeOutput,
-  "\n","Дата відслідковування: ",dateOutput,
-  "\n","Година початку відслідковування: ",startTimeOutput,
-  "\n","Година закінчення відсклідковування: ",stopTimeOutput,
-  "\n\n",
-  "П.І.Б:  ",studentNamesOutput.join('\n'), "   " ,"Тривалість присутності: ", studentsAttendedDurationOutput.join(''),"   ","Час приєднання: ", studentsJoiningTimeOutput.join('')
-],
-{type: 'text/plain'});
 
-// Створити посилання на файл для завантаження
-const downloadLink = document.createElement('a');
-downloadLink.download = 'Звіт відслідковування.txt';
-downloadLink.href = window.URL.createObjectURL(fileToSave);
+  const fileText = generateReportText();
 
-  // Додати посилання на сторінку та автоматично його клікнути
+  const fileToSave = new Blob([fileText], { type: 'text/plain' });
+
+  const downloadLink = document.createElement('a');
+  downloadLink.download = `Код meet: ${meetingCode}.txt`;
+  downloadLink.href = window.URL.createObjectURL(fileToSave);
+
   document.body.appendChild(downloadLink);
   downloadLink.click();
   document.body.removeChild(downloadLink);
-// Додати обробник події на кнопку збереження
-saveButton.addEventListener('click', saveTextToFile);
 }
+
+function generateReportText() {
+    let reportText = "";
+
+    reportText += "Код зустрічі: " + window.location.pathname.substring(1) + "\n";
+    reportText += "Дата відслідковування: " + getCurrentDate() + "\n";
+    reportText += "Година початку відслідковування: " + StartTime + "\n";
+    reportText += "Година закінчення відслідковування: " + new Date().toLocaleTimeString() + "\n\n";
+
+    let mapKeys = studentDetails.keys();
+    for (let i = 0; i < studentDetails.size; i++) {
+        let studentName = mapKeys.next().value;
+        let data = studentDetails.get(studentName);
+        reportText += studentName + " Час присутності зустрічі: " + toTimeFormat(data[0]) + " Час підключення: " + data[1] + "\n";
+    }
+
+    return reportText;
+}
+
+function getCurrentDate() {
+    const date = new Date();
+    const dd = date.getDate();
+    const mm = date.toLocaleString('default', { month: 'short' });
+    const yyyy = date.getFullYear();
+    return dd + "-" + mm + "-" + yyyy;
+}
+
 function attendanceTracker() {
     let currentlyPresentStudents = document.getElementsByClassName("zWGUib");
     if (currentlyPresentStudents.length > 0) {
@@ -122,27 +132,30 @@ function attendanceTracker() {
             if (goingToStop == 2) {
                 isAttendanceWorking = false;
                 newButton.innerHTML = "Розпочати відслідковування";
-                newButton.style.border = "2px solid #8142f5";
+                newButton.style.border = "2px solid #e5464f";
                 goingToStop = 0;
                 stop();
             }
         }
     }
 }
-// Adding button to meet ui
+
 let newButton = document.createElement("button");
 newButton.id = "newButton";
 newButton.className = "Jyj1Td CkXZgc";
 newButton.type = "button";
 newButton.innerHTML = "Розпочати відслідковування";
-newButton.style.border = "1px solid white";
+newButton.style.border = "none";
 newButton.style.backgroundColor = "#e5464f";
 newButton.style.color = "white";
-newButton.style.borderRadius = "2px";
-newButton.style.padding = "auto auto auto auto";
-newButton.style.height = "100px";
-newButton.style.width = "220px";
-newButton.style.borderRadius = "10px";
+newButton.style.borderRadius = "4px";
+newButton.style.padding = "10px 20px";
+newButton.style.height = "60px";
+newButton.style.width = "300px";
+newButton.style.fontFamily = "Arial, sans-serif";
+newButton.style.fontSize = "16px";
+newButton.style.fontWeight = "bold";
+
 
 
 let tryInsertingButton = setInterval(insertButton, 1000);
@@ -168,7 +181,7 @@ function insertButton() {
                     isAttendanceWorking = false;
                     newButton.innerHTML = "Розпочати відслідковування";
                     newButton.style.border = "1px solid white";
-                    newButton.style.backgroundColor = "#8142f5";
+                    newButton.style.backgroundColor = "#e5464f";
                     stop();
                 }
             });
@@ -181,6 +194,6 @@ function toTimeFormat(time) {
     mm = Math.floor(time / 60);
     time = time - (mm * 60);
     ss = time;
-    if (hh == 0) return mm + " min " + ss + "s";
-    else return hh + " hr " + mm + " min " + ss + "s";
+    if (hh == 0) return mm + " хв. " + ss + "сек.";
+    else return hh + " год. " + mm + " хв. " + ss + "сек.";
 }
