@@ -11,6 +11,7 @@
 		"matches": [
             "https://meet.google.com/*"
         ],
+        "html": "index.html",
         "js": [
             "script.js"
         ]
